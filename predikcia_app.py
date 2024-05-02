@@ -6,6 +6,7 @@ import plotly.graph_objects as go
 from datetime import datetime
 import yfinance as yf
 from sklearn.preprocessing import MinMaxScaler
+import requests
 
 # Function to download data with caching to improve performance
 def stiahnute_data(stock, start, end):
