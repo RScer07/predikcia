@@ -7,6 +7,8 @@ from datetime import datetime
 import yfinance as yf
 from sklearn.preprocessing import MinMaxScaler
 import requests
+from io import BytesIO
+from tensorflow.keras.models import load_model
 
 # Function to download data with caching to improve performance
 def stiahnute_data(stock, start, end):
@@ -35,16 +37,17 @@ google_data['MA_pre_250_dni'] = google_data['Adj Close'].rolling(250).mean()
 google_data['MA_pre_200_dni'] = google_data['Adj Close'].rolling(200).mean()
 google_data['MA_pre_100_dni'] = google_data['Adj Close'].rolling(100).mean()
 
-url = "https://www.mediafire.com/file/0pc2g4lvw8uqv1b/Najnovsi_model.keras/file"
+# URL modelu
+model_url = "https://www.dropbox.com/scl/fi/nrm86kwzjcs7lqteanmmx/Najnovsi_model.keras?rlkey=ft5shmq8c4v0tz42yw3odspne&st=wy4cn1p7&dl=0"
 
-local_filename = "Najnovsi_model.keras"
+# Stiahnutie modelu
+response = requests.get(model_url)
+response.raise_for_status()  # Kontrola, či bola požiadavka úspešná
 
-r = requests.get(url)
-with open(local_filename, 'wb') as f:
-    f.write(r.content)
+# Načítanie modelu priamo z pamäte
+model_data = BytesIO(response.content)
+model = load_model(model_data)
 
-# Načítanie modelu
-model = load_model(local_filename)
 
 st.subheader("Historické dáta akcie")
 st.write(google_data.drop(columns=['MA_pre_250_dni', 'MA_pre_200_dni', 'MA_pre_100_dni']))
