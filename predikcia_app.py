@@ -34,7 +34,7 @@ google_data['MA_pre_250_dni'] = google_data['Adj Close'].rolling(250).mean()
 google_data['MA_pre_200_dni'] = google_data['Adj Close'].rolling(200).mean()
 google_data['MA_pre_100_dni'] = google_data['Adj Close'].rolling(100).mean()
 
-model = load_model("C:/Users/DELL/Desktop/Diplomovka/Najnovsi_model1.keras")
+model = load_model("Najnovsi_model1.keras")
 
 st.subheader("Historické dáta akcie")
 st.write(google_data.drop(columns=['MA_pre_250_dni', 'MA_pre_200_dni', 'MA_pre_100_dni']))
