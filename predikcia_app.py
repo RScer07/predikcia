@@ -15,6 +15,9 @@ def stiahnute_data(stock, start, end):
             st.error("Nesprávny ticker symbol: " + stock + ". Skúste to znova.")
             return None
         return data
+    except Exception as e:
+        st.error("Nesprávny ticker symbol alebo problém s pripojením. Skúste to znova.")
+        return None
 
 st.title("Predikcia cien akcií")
 
